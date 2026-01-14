@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { motion } from "motion/react";
 import { 
   Sparkles, 
@@ -12,7 +13,8 @@ import {
   Github,
   Linkedin,
   Twitter,
-  Instagram
+  Instagram,
+  Link2
 } from "lucide-react";
 import { CertificateCard } from "@/app/components/CertificateCard";
 import { DegreeCard } from "@/app/components/DegreeCard";
@@ -20,55 +22,60 @@ import { SkillCard } from "@/app/components/SkillCard";
 import { ExploreCard } from "@/app/components/ExploreCard";
 import { FloatingSticker } from "@/app/components/FloatingSticker";
 import { Doodle } from "@/app/components/Doodle";
+import {
+  Dialog,
+  DialogContent,
+} from "@/app/components/ui/dialog";
 
 export default function App() {
+  const [selectedCertificate, setSelectedCertificate] = useState<{ imageUrl: string; title: string; platform: string } | null>(null);
   const certificates = [
     {
       title: "Advanced Diploma in Computer Applications",
       platform: "Offline",
-      imageUrl: "https://lh6.googleusercontent.com/proxy/zDvCX85PU36VBj-NvXSpHsiXKDBd0OrL5XvdzGrhMlKqRHltgO7F2h1UkFCHonBs1l8gvmz-FcionnJel8rAbi89AewsnaEPZ0oGNB1liY0p",
+      imageUrl: "/adca.jpg",
       rotation: -2,
     },
     {
       title: "Generative AI for All",
       platform: "PW",
-      imageUrl: "/public/generativeaipw.jpg",
+      imageUrl: "/generativeaipw.jpg",
       rotation: 3,
     },
     {
       title: "Java Script Programming",
       platform: "Udemy",
-      imageUrl: "/public/jsudemy.jpg",
+      imageUrl: "/jsudemy.jpg",
       rotation: -1,
     },
     {
       title: "Foundation of Prompt Engineering",
       platform: "AWS",
-      imageUrl: "/public/awsprompt.jpg",
+      imageUrl: "/awsprompt.jpg",
       rotation: 2,
     },
     {
       title: "Complete Python Bootcamp",
       platform: "Code With Harry",
-      imageUrl: "/public/pythoncwh.jpg",
+      imageUrl: "/pythoncwh.jpg",
       rotation: -3,
     },
     {
       title: "Russian as a Foreign Language",
       platform: "Synergy University",
-      imageUrl: "/public/russianlanguage.jpg",
+      imageUrl: "/russianlanguage.jpg",
       rotation: 1,
     },
     {
       title: "Community Influencing Internship",
       platform: "Internshala",
-      imageUrl: "/public/internship1.jpg",
+      imageUrl: "/internship1.jpg",
       rotation: -2,
     },
     {
       title: "Intro to Programming",
       platform: "Kaggle",
-      imageUrl: "/public/programming.jpg",
+      imageUrl: "/programming.jpg",
       rotation: 2,
     },
   ];
@@ -240,6 +247,35 @@ export default function App() {
           transition={{ duration: 0.6 }}
           className="max-w-4xl mx-auto mb-20 relative"
         >
+          {/* Linktree Logo - Top of the box */}
+          <motion.a
+            href="https://tr.ee/shashank"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute -top-6 left-1/2 -translate-x-1/2 z-30"
+            initial={{ opacity: 0, y: -10, rotate: 0 }}
+            animate={{ 
+              opacity: 1, 
+              y: 0,
+              rotate: [0, 0, 360]
+            }}
+            transition={{ 
+              opacity: { duration: 0.5 },
+              y: { duration: 0.5 },
+              rotate: { 
+                times: [0, 0.8, 1],
+                duration: 3.5,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            }}
+            whileHover={{ scale: 1.1 }}
+          >
+            <div className="w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center border-2 border-gray-200">
+              <Link2 size={24} className="text-black" />
+            </div>
+          </motion.a>
+
           <div className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 md:p-12 shadow-2xl border-4 border-yellow-200">
             <div className="flex flex-wrap gap-6 items-start">
               {/* Profile image */}
@@ -326,6 +362,7 @@ export default function App() {
                 imageUrl={cert.imageUrl}
                 rotation={cert.rotation}
                 delay={index * 0.1}
+                onClick={() => cert.imageUrl && setSelectedCertificate({ imageUrl: cert.imageUrl, title: cert.title, platform: cert.platform })}
               />
             ))}
           </div>
@@ -535,6 +572,61 @@ export default function App() {
           </motion.div>
         </motion.div>
       </div>
+
+      {/* Certificate Modal */}
+      <Dialog open={!!selectedCertificate} onOpenChange={(open) => !open && setSelectedCertificate(null)}>
+        <DialogContent className="max-w-[95vw] max-h-[95vh] p-0 bg-transparent border-none shadow-none overflow-hidden">
+          {selectedCertificate && (
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              className="relative bg-gradient-to-br from-yellow-50 via-white to-purple-50 rounded-3xl p-6 md:p-8 shadow-2xl"
+              style={{
+                border: "8px solid transparent",
+                background: "linear-gradient(white, white) padding-box, linear-gradient(135deg, #FCD34D, #F59E0B, #EC4899, #8B5CF6) border-box",
+              }}
+            >
+              {/* Decorative corners */}
+              <div className="absolute -top-2 -left-2 w-8 h-8 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full shadow-lg"></div>
+              <div className="absolute -top-2 -right-2 w-8 h-8 bg-gradient-to-br from-purple-400 to-pink-500 rounded-full shadow-lg"></div>
+              <div className="absolute -bottom-2 -left-2 w-8 h-8 bg-gradient-to-br from-blue-400 to-cyan-500 rounded-full shadow-lg"></div>
+              <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-green-400 to-emerald-500 rounded-full shadow-lg"></div>
+
+              {/* Certificate Title */}
+              <div className="text-center mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-800 mb-2" style={{ fontFamily: 'Baloo 2, sans-serif' }}>
+                  {selectedCertificate.title}
+                </h3>
+                <p className="text-lg text-gray-600" style={{ fontFamily: 'Poppins, sans-serif' }}>
+                  {selectedCertificate.platform}
+                </p>
+              </div>
+
+              {/* Certificate Image Container */}
+              <div className="relative bg-white rounded-2xl p-4 shadow-inner border-4 border-yellow-200 overflow-auto max-h-[75vh]">
+                <div className="flex items-center justify-center min-h-[400px] p-4">
+                  <img
+                    src={selectedCertificate.imageUrl}
+                    alt={selectedCertificate.title}
+                    className="max-w-full max-h-[70vh] w-auto h-auto object-contain rounded-lg"
+                    style={{ 
+                      boxShadow: "0 10px 40px rgba(0,0,0,0.1)"
+                    }}
+                    onError={(e) => {
+                      e.currentTarget.style.display = "none";
+                    }}
+                  />
+                </div>
+              </div>
+
+              {/* Decorative tape strips */}
+              <div className="absolute top-8 left-1/4 w-20 h-6 bg-yellow-200/80 rotate-12 shadow-md"></div>
+              <div className="absolute top-8 right-1/4 w-20 h-6 bg-pink-200/80 -rotate-12 shadow-md"></div>
+            </motion.div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

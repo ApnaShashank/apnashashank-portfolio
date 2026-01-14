@@ -7,6 +7,7 @@ interface CertificateCardProps {
   imageUrl?: string;
   rotation?: number;
   delay?: number;
+  onClick?: () => void;
 }
 
 export function CertificateCard({ 
@@ -14,7 +15,8 @@ export function CertificateCard({
   platform, 
   imageUrl,
   rotation = 0,
-  delay = 0 
+  delay = 0,
+  onClick
 }: CertificateCardProps) {
   return (
     <motion.div
@@ -23,7 +25,8 @@ export function CertificateCard({
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay }}
       whileHover={{ scale: 1.05, rotate: 0, zIndex: 50 }}
-      className="relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300"
+      onClick={onClick}
+      className="relative bg-white rounded-2xl p-4 shadow-lg hover:shadow-2xl transition-all duration-300 cursor-pointer"
       style={{ rotate: rotation }}
     >
       {/* Pin decoration */}
