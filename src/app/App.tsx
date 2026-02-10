@@ -43,9 +43,9 @@ export default function App() {
       rotation: 3,
     },
     {
-      title: "Java Script Programming",
-      platform: "Udemy",
-      imageUrl: "/jsudemy.jpg",
+      title: "Full Stack Web Development",
+      platform: "Cepialabs Internship",
+      imageUrl: "/cepilabs.png",
       rotation: -1,
     },
     {
