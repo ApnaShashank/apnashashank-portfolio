@@ -45,7 +45,7 @@ export default function App() {
     {
       title: "Full Stack Web Development",
       platform: "Cepialabs Internship",
-      imageUrl: "/cepilabs.png",
+      imageUrl: "/cepialabs.jpg",
       rotation: -1,
     },
     {
